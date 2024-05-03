@@ -14,8 +14,7 @@ namespace Tutorial.Basics
         
         void Start()
         {
-            // MoveToNext();
-            transform.DORotate(new Vector3(0,90,0), duration);
+            MoveToNext();            
         }
 
         void MoveToNext()
@@ -26,7 +25,10 @@ namespace Tutorial.Basics
                  _targetIndex = 0;
             }
             
-            transform.DOMove(targets[_targetIndex].position, duration).SetEase(ease).OnComplete(MoveToNext);
+            var seq = DOTween.Sequence();
+            seq.Append(transform.DOLookAt(targets[_targetIndex].position, duration));
+            seq.Append(transform.DOMove(targets[_targetIndex].position, duration).SetEase(ease));
+            seq.OnComplete(MoveToNext);
         }
     }
 }
